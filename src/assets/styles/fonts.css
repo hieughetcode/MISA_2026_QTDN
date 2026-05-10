@@ -1,0 +1,7 @@
+@import url("https://testcdnamisapp.misacdn.net/fonts/font.inter.css");
+body {
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

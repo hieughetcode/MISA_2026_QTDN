@@ -1,0 +1,73 @@
+:root {
+  /* 1. Branding/Màu nút chính */
+  --color-primary: #34b057;
+  --color-primary-hover: #2a8c45;
+
+  /* 2. Text */
+  --text-main: #212121;
+  --text-secondary: #666666;
+  --text-placeholder: #9e9e9e;
+
+  /* 3. Background */
+  --bg-main: #f2f2f2;
+
+  /* 4. Data grid */
+  --grid-border: #e0e0e0;
+  --grid-header-bg: #f6f6f6;
+
+  /* 5. Status */
+  --status-focus: #eaf7ee;
+  --status-error: #e54848;
+  --status-warning: #ffdd00;
+  --status-active: #34b057;
+  --status-pending: #ff9900;
+
+  /* 6. Icon States */
+  --icon-border: #707070;
+  --icon-bg-hover: #f2f2f2;
+  --icon-bg-press: #ebebeb;
+
+  /* 7. Color palette (Màu avatar, tag) */
+  --palette-1: #e83950;
+  --palette-2: #fd632e;
+  --palette-3: #fd9a02;
+  --palette-4: #edc201;
+  --palette-5: #a4cf32;
+  --palette-6: #64d271;
+  --palette-7: #39c5ab;
+  --palette-8: #21aaea;
+  --palette-9: #4386e0;
+  --palette-10: #7c70ef;
+  --palette-11: #aa64e3;
+  --palette-12: #e364e3;
+  --palette-13: #ea509d;
+  --palette-14: #fc91ad;
+  --palette-15: #deeef9;
+}
+
+/* 8. Icon Button */
+.ms-icon-btn__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.ms-icon-btn:hover {
+  background-color: var(--icon-bg-hover);
+  border-color: var(--icon-border);
+}
+
+.ms-icon-btn:active {
+  background-color: var(--icon-bg-press);
+  border-color: var(--icon-border);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+* {
+  box-sizing: border-box;
+}
