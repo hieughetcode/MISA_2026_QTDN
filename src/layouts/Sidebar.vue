@@ -52,7 +52,6 @@ const toggleSidebar = async () => {
     isCollapsed.value = !isCollapsed.value
     localStorage.setItem('sidebarCollapsed', isCollapsed.value)
 
-    // Đợi Vue cập nhật class trên DOM của component xong rồi mới tác động lên body
     await nextTick()
 
     if (isCollapsed.value) {
@@ -84,19 +83,13 @@ onMounted(() => {
     display: none;
 }
 
-/* Đảm bảo căn giữa tuyệt đối cho Icon Menu khi thu gọn */
 .sidebar.sidebar-collapsed .sidebar__menu__item {
     width: 40px;
     height: 40px;
-    /* Cố định chiều cao bằng chiều rộng tạo hình vuông */
     padding: 0;
-    /* Xóa sạch padding */
     margin: 0 auto 8px auto;
-    /* Dùng margin auto để tự động căn giữa item trong khung 60px */
     justify-content: center;
-    /* Căn giữa theo chiều ngang */
     align-items: center;
-    /* Căn giữa theo chiều dọc */
 }
 
 /* Đảm bảo căn giữa tuyệt đối cho Nút Thu gọn */
@@ -108,7 +101,6 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     align-self: center;
-    /* Đảm bảo nút luôn căn giữa tuyệt đối trong mọi trường hợp */
 }
 
 .sidebar.sidebar-collapsed .sidebar__toggle__icon {
@@ -116,7 +108,6 @@ onMounted(() => {
     margin: 0;
 }
 
-/* ================= CSS Mở rộng (Mặc định) ================= */
 .sidebar {
     position: absolute;
     top: 48px;
@@ -159,11 +150,9 @@ onMounted(() => {
     display: flex;
     align-items: center;
     gap: 8px;
-    /* Tự động tạo khoảng cách đều 8px giữa icon, text và các badge/arrow */
     position: relative;
     border-radius: 8px;
     padding: 8px 32px 8px 12px;
-    /* Tăng padding phải để tránh chữ đè lên mũi tên */
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
@@ -194,13 +183,11 @@ onMounted(() => {
     background-color: #ffffff !important;
 }
 
-/* ================= Các thành phần bên trong Menu Item ================= */
 .sidebar__menu__item__icon {
     width: 20px;
     height: 20px;
     min-width: 20px;
     flex-shrink: 0;
-    /* Quan trọng: Ngăn không cho icon bị bóp méo khi màn hình hẹp */
     background-color: #c5ccd5;
     mask-image: url('/src/assets/icons/Icon.svg');
     mask-repeat: no-repeat;
@@ -213,7 +200,6 @@ onMounted(() => {
     line-height: 20px;
     white-space: nowrap;
     overflow: hidden;
-    /* Cắt chữ nếu quá dài */
     text-overflow: ellipsis;
     flex: 1;
     margin-bottom: 4px;
@@ -226,10 +212,8 @@ onMounted(() => {
     flex-shrink: 0;
     position: absolute;
     right: 6px;
-    /* Neo cố định mũi tên sát lề phải của khối item */
     top: 50%;
     transform: translateY(-50%);
-    /* Giữ cho mũi tên luôn được căn giữa theo chiều dọc */
     background-color: #c5ccd5;
     mask-image: url('/src/assets/icons/Icon.svg');
     mask-position: -186px -781px;
@@ -277,9 +261,7 @@ onMounted(() => {
     align-items: center;
     justify-content: center;
     width: 172px;
-    /* Thu gọn chiều rộng của nút cho vừa với nội dung */
     padding: 0 16px;
-    /* Thêm khoảng trống 2 bên để nút trông cân đối */
     margin: 0 auto;
     /* Căn giữa nút trong Sidebar */
     border-radius: 8px;
@@ -292,7 +274,6 @@ onMounted(() => {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    /* Ép phần tử con giãn hết chiều ngang */
 }
 
 .sidebar__toggle:hover {

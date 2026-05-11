@@ -89,9 +89,6 @@ const searchPlaceholder = ref('Tìm kiếm')
 const searchQuery = ref('')
 const storeCount = ref(2)
 
-/*
-* Hàm xử lý sự kiện khi người dùng nhấn Enter trong ô tìm kiếm
-*/
 const handleSearch = () => {
     if (searchQuery.value.trim() !== '') {
         console.log('Đang tìm kiếm:', searchQuery.value)
@@ -111,7 +108,6 @@ const handleSearch = () => {
     background-color: #ffffff;
     border-bottom: 1px solid var(--grid-border);
     z-index: 10;
-    /* Nâng z-index của toàn bộ Navbar lên cao hơn Sidebar */
 }
 
 .navbar__left {

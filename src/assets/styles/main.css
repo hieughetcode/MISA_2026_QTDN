@@ -43,6 +43,60 @@
   --palette-13: #ea509d;
   --palette-14: #fc91ad;
   --palette-15: #deeef9;
+
+  /* 8. Additional variables */
+  --grid-loading-color: 52, 176, 87;
+  --ms-primary: var(--grid-loading-color);
+  --ms-secondary: 255, 255, 255;
+  --red-color: #ff6161;
+  --primary: #34b057;
+  --primary-bg: #eafbf2;
+  --green: #25b973;
+  --yellow: #ff9f43;
+  --text-box-height: 36px;
+  --input-border-radius: 4px;
+  --text-primary-color: #212121;
+  --text-secondary-color: #666;
+  --text-disable-color: #9e9e9e;
+  --text-white-primary-color: #fff;
+  --text-white-secondary-color: #d7dae5;
+  --text-placeholder-color: #666;
+  --input-normal-border-color: #e0e0e0;
+  --input-active-border-color: #34b057;
+  --input-hover-border-color: #34b057;
+  --input-disable-border: #e1e1e1;
+  --input-disable-bg-color: #ebebeb;
+  --input-error-border-color: #ff6161;
+  --combobox-highlight-bg-color: #eafbf2;
+  --combobox-highlight-bg-2-color: rgba(235, 251, 243, 0.4);
+  --combobox-highlight-color: #34b057;
+  --combobox-color: #000;
+  --tab-color: #34b057;
+  --tab-bg: #34b057;
+  --tab-border: #34b057;
+  --button-height: 36px;
+  --button-border-radius: 4px;
+  --button-primary-color: #fff;
+  --button-primary-normal-bg-color: #34b057;
+  --button-primary-normal-border-color: #34b057;
+  --button-primary-hover-bg-color: #02b936;
+  --button-primary-hover-border-color: #02b936;
+  --button-primary-active-bg-color: #198f3b;
+  --button-primary-active-border-color: #198f3b;
+  --button-primary-disabled-color: hsla(0, 0%, 100%, 0.6);
+  --button-primary-disabled-bg-color: rgba(52, 176, 87, 0.6);
+  --button-primary-disabled-border-color: rgba(52, 176, 87, 0.6);
+  --button-primary-focus-bg-color: #02b936;
+  --button-primary-focus-border-color: #02b936;
+  --grid-border-color: #e0e0e0;
+  --dropdown-item-hover: #eafbf2;
+  --dropdown-item-active-color: #34b057;
+  --date-picker-active-bg: #34b057;
+  --date-picker-range-bg: #eafbf2;
+  --date-picker-hover-bg: #eafbf2;
+  --date-picker-color-today: #34b057;
+  --combobox-selected-bg: #e6e8ed;
+  --live-chat-bg: #0073e6;
 }
 
 /* 8. Icon Button */
