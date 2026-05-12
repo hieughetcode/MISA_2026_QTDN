@@ -244,7 +244,7 @@ const handleSearch = () => {
 }
 
 .navbar__right__chatbot__icon {
-    background: url(https://testcdnamisapp.misacdn.net/apps/payroll/static/img/payroll_agent.86d4797.png) center no-repeat;
+    background: url(https://testcdnamisapp.misacdn.net/apps/payroll/static/img/payroll_agent-d_2srbQV.png) center no-repeat;
     background-size: cover;
     height: 24px;
     width: 24px;
@@ -257,10 +257,9 @@ const handleSearch = () => {
 }
 
 .navbar__right__notify__icon {
-    width: 24px;
-    height: 24px;
-    background-size: cover;
-    background-image: url("https://amisplatform.misacdn.net/apps/recruit/icon-notification-version.d5e3dc604036ed5b.svg");
+    background: url('/src/assets/icons/Icon.svg') no-repeat -338px -596px;
+    width: 20px;
+    height: 20px;
 }
 
 .navbar__right__user__icon {

@@ -11,46 +11,31 @@
     </label>
 </template>
 
-<script>
-export default {
+<script setup>
+import { computed } from "vue";
+
+defineOptions({
     name: "MsToggle",
     inheritAttrs: false,
-    props: {
-        modelValue: {
-            type: [Boolean, String, Number],
-            default: false,
-        },
-        trueValue: {
-            type: [Boolean, String, Number],
-            default: true,
-        },
-        falseValue: {
-            type: [Boolean, String, Number],
-            default: false,
-        },
-        label: {
-            type: String,
-            default: "",
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    emits: ["update:modelValue", "change"],
-    computed: {
-        isChecked() {
-            return this.modelValue === this.trueValue;
-        },
-    },
-    methods: {
-        handleChange(event) {
-            if (this.disabled) return;
-            const val = event.target.checked ? this.trueValue : this.falseValue;
-            this.$emit("update:modelValue", val);
-            this.$emit("change", val);
-        },
-    },
+});
+
+const props = defineProps({
+    modelValue: { type: [Boolean, String, Number], default: false },
+    trueValue: { type: [Boolean, String, Number], default: true },
+    falseValue: { type: [Boolean, String, Number], default: false },
+    label: { type: String, default: "" },
+    disabled: { type: Boolean, default: false },
+});
+
+const emit = defineEmits(["update:modelValue", "change"]);
+
+const isChecked = computed(() => props.modelValue === props.trueValue);
+
+const handleChange = (event) => {
+    if (props.disabled) return;
+    const val = event.target.checked ? props.trueValue : props.falseValue;
+    emit("update:modelValue", val);
+    emit("change", val);
 };
 </script>
 

@@ -22,36 +22,24 @@
     </label>
 </template>
 
-<script>
-export default {
+<script setup>
+defineOptions({
     name: "MsCheckbox",
-
     inheritAttrs: false,
+});
 
-    props: {
-        modelValue: {
-            type: Boolean,
-            default: false,
-        },
-        label: {
-            type: String,
-            default: "",
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-    },
+const props = defineProps({
+    modelValue: { type: Boolean, default: false },
+    label: { type: String, default: "" },
+    disabled: { type: Boolean, default: false },
+});
 
-    emits: ["update:modelValue", "change"],
+const emit = defineEmits(["update:modelValue", "change"]);
 
-    methods: {
-        handleChange(event) {
-            if (this.disabled) return;
-            this.$emit("update:modelValue", event.target.checked);
-            this.$emit("change", event.target.checked);
-        },
-    },
+const handleChange = (event) => {
+    if (props.disabled) return;
+    emit("update:modelValue", event.target.checked);
+    emit("change", event.target.checked);
 };
 </script>
 

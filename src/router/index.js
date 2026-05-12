@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainLayout from '../layouts/MainLayout.vue'
-import SalaryCompositionList from '../views/salary-composition/SalaryCompositionList.vue'
+import SalaryCompositionList from '@/views/salarycomposition/SalaryCompositionList.vue'
+import SalarySystemCategory from '@/views/system-category/SalarySystemCategory.vue'
 
 const router = createRouter({
   //Chỉnh url dạng / thay vì dạng #/
@@ -20,9 +21,16 @@ const router = createRouter({
       */
       children: [
         {
+          //Màn hình danh sách lương -> mặc định
           path: 'salarycomposition',
           name: 'SalaryCompositionList',
           component: SalaryCompositionList,
+        },
+        {
+          //Màn hình danh mục lương của hệ thống
+          path: 'salarycomposition/system-category',
+          name: 'SalarySystemCategory',
+          component: SalarySystemCategory,
         }
       ]
     }

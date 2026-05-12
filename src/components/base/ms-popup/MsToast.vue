@@ -11,47 +11,35 @@
     </Transition>
 </template>
 
-<script>
-export default {
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
+defineOptions({
     name: "MsToast",
+});
 
-    props: {
-        type: {
-            type: String,
-            default: "info", // info | warning | success | error
-        },
-        text: {
-            type: String,
-            required: true,
-        },
-        duration: {
-            type: Number,
-            default: 3000, // ms trước khi tự tắt
-        },
-    },
+const props = defineProps({
+    type: { type: String, default: "info" },
+    text: { type: String, required: true },
+    duration: { type: Number, default: 3000 },
+});
 
-    emits: ["close"],
+const emit = defineEmits(["close"]);
 
-    data() {
-        return {
-            visible: false,
-            timer: null,
-        };
-    },
+const visible = ref(false);
+let timer = null;
 
-    mounted() {
-        this.visible = true;
-        this.timer = setTimeout(() => {
-            this.visible = false;
-            // Chờ animation kết thúc rồi mới emit close
-            setTimeout(() => this.$emit("close"), 300);
-        }, this.duration);
-    },
+onMounted(() => {
+    visible.value = true;
+    timer = setTimeout(() => {
+        visible.value = false;
+        setTimeout(() => emit("close"), 300);
+    }, props.duration);
+});
 
-    beforeUnmount() {
-        clearTimeout(this.timer);
-    },
-};
+onBeforeUnmount(() => {
+    clearTimeout(timer);
+});
 </script>
 
 <style scoped>

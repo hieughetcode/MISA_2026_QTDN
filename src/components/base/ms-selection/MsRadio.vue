@@ -18,46 +18,29 @@
     </label>
 </template>
 
-<script>
-export default {
+<script setup>
+import { computed } from "vue";
+
+defineOptions({
     name: "MsRadio",
-
     inheritAttrs: false,
+});
 
-    props: {
-        modelValue: {
-            type: [String, Number, Boolean],
-            default: "",
-        },
-        value: {
-            type: [String, Number, Boolean],
-            required: true,
-        },
-        label: {
-            type: String,
-            default: "",
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-    },
+const props = defineProps({
+    modelValue: { type: [String, Number, Boolean], default: "" },
+    value: { type: [String, Number, Boolean], required: true },
+    label: { type: String, default: "" },
+    disabled: { type: Boolean, default: false },
+});
 
-    emits: ["update:modelValue", "change"],
+const emit = defineEmits(["update:modelValue", "change"]);
 
-    computed: {
-        isChecked() {
-            return this.modelValue === this.value;
-        },
-    },
+const isChecked = computed(() => props.modelValue === props.value);
 
-    methods: {
-        handleChange() {
-            if (this.disabled) return;
-            this.$emit("update:modelValue", this.value);
-            this.$emit("change", this.value);
-        },
-    },
+const handleChange = () => {
+    if (props.disabled) return;
+    emit("update:modelValue", props.value);
+    emit("change", props.value);
 };
 </script>
 
