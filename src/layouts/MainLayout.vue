@@ -16,18 +16,17 @@ import Navbar from './Navbar.vue'
 <style scoped>
 .content {
     position: absolute;
+    background: #f4f5f8;
     top: 48px;
     left: 220px;
     right: 0px;
     bottom: 0px;
-    background: url(https://amisplatform.misacdn.net/images/imagesapps/recruit/background_default1.jpg);
     transition: left 0.3s ease;
     overflow-y: auto;
 }
 </style>
 
 <style>
-/* Tách ra style thường để tránh lỗi biên dịch */
 body.sidebar-collapsed .content {
     left: 60px !important;
 }

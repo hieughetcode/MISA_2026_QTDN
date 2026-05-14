@@ -210,7 +210,6 @@ const removeTag = (index) => {
     background-color: var(--icon-bg-press, #ebebeb);
 }
 
-/* Sử dụng Inline SVG Mask để đảm bảo hiển thị đúng trên mọi môi trường */
 .icon-search {
     width: 20px;
     height: 20px;

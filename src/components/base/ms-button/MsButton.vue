@@ -69,10 +69,8 @@ const onClick = (event) => {
 </script>
 
 <style scoped>
-/* CSS nền tảng chung cho mọi loại nút */
 .ms-button {
     min-width: 80px;
-    /* Thỏa mãn điều kiện min-width: 80px */
     height: 36px;
     padding: 0 16px;
     border-radius: 4px;
@@ -82,7 +80,6 @@ const onClick = (event) => {
     align-items: center;
     justify-content: center;
     gap: 4px;
-    /* Khoảng cách giữa icon và text */
     font-family: inherit;
     font-size: 14px;
     font-weight: 500;
@@ -91,7 +88,6 @@ const onClick = (event) => {
     outline: none;
 }
 
-/* Tùy chỉnh padding khi có icon theo thiết kế */
 .ms-button.has-left-icon {
     padding-left: 12px;
 }
@@ -102,10 +98,8 @@ const onClick = (event) => {
 
 .ms-button.ms-button-combo {
     padding-right: 8px;
-    /* Combo button có thanh phân cách nên căn lề phải bé hơn */
 }
 
-/* Trạng thái Disabled: opacity 60% theo yêu cầu */
 .ms-button:disabled,
 .ms-button.is-disabled {
     opacity: 0.6;
@@ -118,7 +112,6 @@ const onClick = (event) => {
     justify-content: center;
 }
 
-/* 1. Nút Primary, 4. Combo Button, 6. Mixed Button */
 .ms-button-primary,
 .ms-button-combo,
 .ms-button-mixed {
@@ -141,7 +134,7 @@ const onClick = (event) => {
     background-color: var(--button-primary-active-bg-color, #198F3B);
 }
 
-/* 2. Nút Secondary (Phụ) */
+/* Nút Secondary */
 .ms-button-secondary {
     background-color: var(--button-primary-color, #fff);
     color: var(--text-primary-color, #212121);
@@ -160,7 +153,7 @@ const onClick = (event) => {
     border-color: var(--button-primary-active-border-color, #198F3B);
 }
 
-/* 3. Link button */
+/* Link button */
 .ms-button-link {
     background-color: transparent;
     color: var(--button-primary-normal-bg-color, #34b057);
