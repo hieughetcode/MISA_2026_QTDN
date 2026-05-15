@@ -1,10 +1,10 @@
 <template>
-    <div class="ms-dropdown-wrapper" ref="dropdownRef">
+    <div class="ms-dropdown-wrapper" :class="{ 'action-wrapper': isActionMenu }" ref="dropdownRef">
         <label v-if="label" class="ms-dropdown-label">{{ label }}</label>
 
         <!-- Nếu là dạng Context Menu (Chỉ hiển thị menu khi click phần tử trigger từ bên ngoài truyền vào slot) -->
         <div v-if="isActionMenu" class="ms-dropdown-action-trigger" @click="toggleDropdown">
-            <slot name="trigger"></slot>
+            <slot name="trigger" :isOpen="isOpen"></slot>
         </div>
 
         <!-- Nếu là Combobox / Dropdown list thường -->
@@ -49,7 +49,7 @@
                         @click="selectOption(option)">
                         <span class="item-text">{{ option.label }}</span>
 
-                        <div v-if="isSelected(option) && !isActionMenu" class="icon-check"></div>
+                        <div v-if="isSelected(option) && (!isActionMenu || showCheckmark)" class="icon-check"></div>
                         <div v-if="option.hasSub" class="icon-chevron-right"></div>
                     </div>
                 </template>
@@ -73,7 +73,8 @@ const props = defineProps({
     isMulti: { type: Boolean, default: false },
     isLoading: { type: Boolean, default: false },
     isSearchable: { type: Boolean, default: true },
-    isActionMenu: { type: Boolean, default: false } // Dùng cho loại menu ngữ cảnh như hình Bảng màu
+    isActionMenu: { type: Boolean, default: false }, // Dùng cho loại menu ngữ cảnh như hình Bảng màu
+    showCheckmark: { type: Boolean, default: false } // Cho phép hiển thị dấu check ngay cả khi là Action Menu
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -178,10 +179,13 @@ onUnmounted(() => {
 .ms-dropdown-wrapper {
     position: relative;
     font-family: inherit;
-    width: 100%;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     gap: 4px;
+}
+
+.ms-dropdown-wrapper:not(.action-wrapper) {
+    width: 100%;
 }
 
 .ms-dropdown-label {
@@ -201,8 +205,8 @@ onUnmounted(() => {
     align-items: center;
     justify-content: space-between;
     border: 1px solid var(--input-normal-border-color, #e0e0e0);
-    border-radius: 4px;
-    min-height: 36px;
+    border-radius: 8px;
+    min-height: 30px;
     background: var(--text-white-primary-color, #ffffff);
     cursor: pointer;
     transition: border-color 0.2s;
@@ -227,7 +231,7 @@ onUnmounted(() => {
 
 .ms-dropdown-input {
     width: 100%;
-    height: 34px;
+    height: 30px;
     border: none;
     outline: none;
     background: transparent;
@@ -306,20 +310,21 @@ onUnmounted(() => {
     position: absolute;
     top: calc(100% + 4px);
     left: 0;
+
+    width: max-content;
     min-width: 100%;
+
     background: var(--text-white-primary-color, #ffffff);
     border: 1px solid var(--input-normal-border-color, #e0e0e0);
     border-radius: 4px;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-    padding: 8px;
+
+    padding: 8px 0px;
     box-sizing: border-box;
+
     z-index: 1000;
     max-height: 250px;
     overflow-y: auto;
-}
-
-.action-menu {
-    min-width: 220px;
 }
 
 /* Items */
@@ -336,12 +341,12 @@ onUnmounted(() => {
 }
 
 .ms-dropdown-item:hover {
-    background-color: var(--dropdown-item-hover, #eafbf2);
+    background-color: var(--ms-color-bg-hover, #f5f5f5);
 }
 
 .ms-dropdown-item.is-selected {
-    color: var(--dropdown-item-active-color, #34b057);
-    background-color: var(--dropdown-item-hover, #eafbf2);
+    color: var(--primary, #34b057);
+    background-color: #CDEADF;
 }
 
 .ms-dropdown-item.is-danger {
