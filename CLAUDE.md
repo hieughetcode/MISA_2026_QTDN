@@ -221,6 +221,25 @@ Xem các icon class mẫu trong `Sidebar.vue` (`.icon-overview`, `.icon-salary-c
 
 ---
 
+## Quy tắc đặt tên class (BEM)
+
+Dùng BEM cho tất cả class CSS trong project.
+
+| Loại | Cú pháp | Ví dụ |
+|------|---------|-------|
+| Block | `block-name` | `filter-chip`, `ctx-menu`, `ms-grid-footer` |
+| Element | `block__element` | `filter-chip__menu`, `ctx-menu__item`, `ms-grid-footer__nav-btn` |
+| Modifier | `block--modifier` / `block__element--modifier` | `filter-chip--wide`, `ctx-menu__item--danger` |
+
+**Bắt buộc:**
+- Element phải gắn tên block: ❌ `chip-menu` → ✅ `filter-chip__menu`
+- Modifier dùng `--`, không stacking class: ❌ `filter-chip.wide` → ✅ `filter-chip--wide`
+- Modifier luôn đi kèm class base: `class="ctx-menu__item ctx-menu__item--danger"`
+- State class `is-open`, `is-selected`, `is-disabled` được phép dùng song song class BEM
+- Icon/utility class (`icon-*`, `text-*`) được phép là standalone, không cần BEM
+
+---
+
 ## Quy tắc code
 
 - **Không dùng Options API** — chỉ dùng `<script setup>` (Composition API)

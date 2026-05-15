@@ -18,7 +18,7 @@ import Navbar from './Navbar.vue'
     position: absolute;
     background: #f4f5f8;
     top: 48px;
-    left: 220px;
+    left: 233px;
     right: 0px;
     bottom: 0px;
     transition: left 0.3s ease;

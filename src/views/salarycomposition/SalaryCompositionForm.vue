@@ -1,4 +1,5 @@
 <template>
+    <div class="page-shell">
     <MsModal :model-value="modelValue" :title="isEdit ? 'Sửa thành phần lương' : 'Thêm thành phần lương'"
         :width="700" @update:model-value="$emit('update:modelValue', $event)">
 
@@ -103,6 +104,7 @@
             </MsButton>
         </template>
     </MsModal>
+    </div>
 </template>
 
 <script setup>
@@ -116,12 +118,12 @@ import MsToggle from '@/components/base/ms-selection/MsToggle.vue'
 import MsFormula from '@/components/base/ms-input/MsFormula.vue'
 import MsButton from '@/components/base/ms-button/MsButton.vue'
 
-import { organizations } from '@/mocks/data.js'
 import { COMPOSITION_TYPE_OPTIONS } from '@/utils/constants.js'
 
 const props = defineProps({
     modelValue: { type: Boolean, default: false },
-    item: { type: Object, default: null }
+    item: { type: Object, default: null },
+    orgOptions: { type: Array, default: () => [] }
 })
 
 const emit = defineEmits(['update:modelValue', 'save'])
@@ -156,11 +158,6 @@ watch(() => props.item, (item) => {
     errors.value = {}
 }, { immediate: true })
 
-const orgOptions = organizations.map(o => ({
-    value: o.organizationId,
-    label: o.organizationName
-}))
-
 const typeOptions = COMPOSITION_TYPE_OPTIONS
 
 const validate = () => {
@@ -188,6 +185,8 @@ const handleSaveAndContinue = () => {
 </script>
 
 <style scoped>
+.page-shell { height: 100%; padding: 12px 16px 16px; background: rgb(16, 24, 40); box-sizing: border-box; }
+
 .form-grid {
     display: flex;
     flex-direction: column;

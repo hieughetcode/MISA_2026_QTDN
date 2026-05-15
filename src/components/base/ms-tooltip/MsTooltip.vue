@@ -70,8 +70,7 @@ const isVisible = ref(false)
     border-width: 0 6px 6px 6px;
     border-color: transparent transparent #38393D transparent;
     top: -5px;
-    left: 12px;
-    transform: translateX(-50%);
+    left: 14px;
 }
 
 /* Arrow Tooltip*/
@@ -103,5 +102,19 @@ const isVisible = ref(false)
     bottom: -5px;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.ms-tooltip-content.right {
+    left: calc(100% + 8px);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ms-tooltip-content.right .ms-tooltip-arrow {
+    border-width: 5px 6px 5px 0;
+    border-color: transparent #38393D transparent transparent;
+    left: -5px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 </style>

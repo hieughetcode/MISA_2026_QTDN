@@ -3,7 +3,9 @@
         <div class="sidebar_bg">
             <div class="sidebar__menu">
                 <div v-for="(item, index) in menuItems" :key="index" class="sidebar__menu__item"
-                    :class="{ 'sidebar__menu__item-active': item.isActive }" @click="setActiveMenu(index)">
+                    :class="{ 'sidebar__menu__item-active': item.isActive }" @click="setActiveMenu(index)"
+                    @mouseenter="item.hasTooltip ? showItemTooltip(item, $event) : null"
+                    @mouseleave="item.hasTooltip ? hideItemTooltip() : null">
 
                     <div class="sidebar__menu__item__icon" :class="item.iconClass"></div>
 
@@ -15,31 +17,58 @@
                 </div>
             </div>
 
-            <MsTooltip position="top" :content="isCollapsed ? 'Mở rộng' : 'Mở rộng'" class="sidebar__toggle-wrapper">
-                <div class="sidebar__toggle" @click="toggleSidebar">
+            <div class="sidebar__toggle-wrapper">
+                <div class="sidebar__toggle" @click="toggleSidebar" @mouseenter="showToggleTooltip($event)"
+                    @mouseleave="hideItemTooltip()">
                     <div class="sidebar__toggle__icon"></div>
-                    <div class="sidebar__toggle__text">Thu gọn</div>
                 </div>
-            </MsTooltip>
+            </div>
         </div>
     </div>
+
+    <Teleport to="body">
+        <div v-if="itemTooltip.visible" class="sidebar-item-tooltip"
+            :style="{ left: itemTooltip.x + 'px', top: itemTooltip.y + 'px' }">
+            {{ itemTooltip.text }}
+        </div>
+    </Teleport>
 </template>
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
-import MsTooltip from '@/components/base/ms-tooltip/MsTooltip.vue'
+import { ref, reactive, onMounted, nextTick } from 'vue'
 
 const isCollapsed = ref(false)
 
+const itemTooltip = reactive({ visible: false, x: 0, y: 0, text: '' })
+
+const showItemTooltip = (item, event) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    itemTooltip.text = item.name
+    itemTooltip.x = rect.right + 8
+    itemTooltip.y = rect.top + rect.height / 2
+    itemTooltip.visible = true
+}
+
+const hideItemTooltip = () => {
+    itemTooltip.visible = false
+}
+
+const showToggleTooltip = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect()
+    itemTooltip.text = isCollapsed.value ? 'Mở rộng' : 'Thu gọn'
+    itemTooltip.x = rect.right + 8
+    itemTooltip.y = rect.top + rect.height / 2
+    itemTooltip.visible = true
+}
+
 const menuItems = ref([
-    { name: 'Tổng quan', iconClass: 'icon-overview', isActive: false },
-    { name: 'Thành phần lương', iconClass: 'icon-salary-components', isActive: true }, // Đang active màu xanh
-    { name: 'Mẫu bảng lương', iconClass: 'icon-salary-template', isActive: false },
+    { name: 'Tổng quan', iconClass: 'icon-overview', isActive: false, hasTooltip: true },
+    { name: 'Thành phần lương', iconClass: 'icon-salary-components', isActive: true, hasTooltip: true },
+    { name: 'Mẫu bảng lương', iconClass: 'icon-salary-template', isActive: false, hasTooltip: true },
     { name: 'Dữ liệu tính lương', iconClass: 'icon-salary-data', isActive: false, hasSubmenu: true },
     { name: 'Tính lương', iconClass: 'icon-calc-salary', isActive: false, hasSubmenu: true },
     { name: 'Chi trả', iconClass: 'icon-payment', isActive: false, hasSubmenu: true },
-    { name: 'Báo cáo', iconClass: 'icon-report', isActive: false },
-    { name: 'Thiết lập', iconClass: 'icon-settings', isActive: false, hasSubmenu: true }
+    { name: 'Báo cáo', iconClass: 'icon-report', isActive: false, hasTooltip: true }
 ])
 
 const setActiveMenu = (selectedIndex) => {
@@ -77,35 +106,22 @@ onMounted(() => {
 }
 
 .sidebar.sidebar-collapsed .sidebar__menu__item__text,
-.sidebar.sidebar-collapsed .sidebar__toggle__text,
 .sidebar.sidebar-collapsed .sidebar__menu__item__new__badge,
 .sidebar.sidebar-collapsed .sidebar__menu__item__arrow {
     display: none;
 }
 
 .sidebar.sidebar-collapsed .sidebar__menu__item {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     padding: 0;
-    margin: 0 auto 8px auto;
+    margin: 0 auto 4px auto;
     justify-content: center;
     align-items: center;
-}
-
-/* Đảm bảo căn giữa tuyệt đối cho Nút Thu gọn */
-.sidebar.sidebar-collapsed .sidebar__toggle {
-    width: 40px;
-    height: 40px;
-    padding: 0;
-    margin: 0 auto;
-    justify-content: center;
-    align-items: center;
-    align-self: center;
 }
 
 .sidebar.sidebar-collapsed .sidebar__toggle__icon {
     transform: rotate(180deg);
-    margin: 0;
 }
 
 .sidebar {
@@ -113,12 +129,9 @@ onMounted(() => {
     top: 48px;
     left: 0;
     bottom: 0;
-    width: 220px;
-    background-color: #161a17;
-    background-image: url(https://amisplatform.misacdn.net/apps/recruit/event-sidebar.b836f9e63b28d1c0.png);
-    background-position: bottom left;
-    background-repeat: no-repeat;
-    background-size: 100% auto;
+    width: 233px;
+    background-color: #ffffff;
+    border-right: 1px solid var(--grid-border, #e0e0e0);
     transition: width 0.3s ease;
     z-index: 8;
 }
@@ -129,8 +142,7 @@ onMounted(() => {
     left: 0;
     bottom: 0;
     width: 100%;
-    padding: 24px 0px 16px 0px;
-    background: rgba(0, 0, 0, 0.5);
+    padding: 16px 0px 0px 0px;
     display: flex;
     flex-direction: column;
 }
@@ -145,8 +157,8 @@ onMounted(() => {
 }
 
 .sidebar__menu__item {
-    height: 36px;
-    margin: 0px 12px 8px 12px;
+    height: 32px;
+    margin: 0px 12px 4px 12px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -158,29 +170,22 @@ onMounted(() => {
 }
 
 .sidebar__menu__item:hover {
-    background-color: rgba(52, 176, 87, .25);
+    background-color: #E9EAEB;
 }
 
-.sidebar__menu__item:hover .sidebar__menu__item__text {
-    color: #ffffff;
-}
-
-.sidebar__menu__item:hover .sidebar__menu__item__icon,
-.sidebar__menu__item:hover .sidebar__menu__item__arrow {
-    background-color: #ffffff;
-}
+.sidebar__menu__item:hover .sidebar__menu__item__text {}
 
 .sidebar__menu__item-active {
-    background-color: var(--color-primary, #34b057) !important;
+    background-color: rgba(52, 176, 87, 0.12) !important;
 }
 
 .sidebar__menu__item-active .sidebar__menu__item__text {
-    color: #ffffff !important;
+    color: var(--color-primary-hover, #2a8c45) !important;
 }
 
 .sidebar__menu__item-active .sidebar__menu__item__icon,
 .sidebar__menu__item-active .sidebar__menu__item__arrow {
-    background-color: #ffffff !important;
+    background-color: var(--color-primary-hover, #2a8c45) !important;
 }
 
 .sidebar__menu__item__icon {
@@ -188,13 +193,13 @@ onMounted(() => {
     height: 20px;
     min-width: 20px;
     flex-shrink: 0;
-    background-color: #c5ccd5;
+    background-color: #757575;
     mask-image: url('/src/assets/icons/Icon.svg');
     mask-repeat: no-repeat;
 }
 
 .sidebar__menu__item__text {
-    color: #c5ccd5;
+    color: #424242;
     font-weight: 500;
     font-size: 14px;
     line-height: 20px;
@@ -214,7 +219,7 @@ onMounted(() => {
     right: 6px;
     top: 50%;
     transform: translateY(-50%);
-    background-color: #c5ccd5;
+    background-color: #9e9e9e;
     mask-image: url('/src/assets/icons/Icon.svg');
     mask-position: -186px -781px;
 }
@@ -255,54 +260,91 @@ onMounted(() => {
 }
 
 /* ================= Nút Thu Gọn ================= */
+.sidebar__toggle-wrapper {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sidebar.sidebar-collapsed .sidebar__toggle-wrapper {
+    justify-content: center;
+    padding: 0;
+}
+
+.sidebar.sidebar-collapsed .sidebar__toggle {
+    width: 100%;
+    height: 40px;
+    border-width: 1px 0 0 0;
+    border-radius: 0;
+}
+
+.sidebar.sidebar-collapsed .sidebar__toggle:hover {
+    background-color: #ebebeb;
+    border-radius: 0;
+}
+
+.sidebar.sidebar-collapsed .sidebar__toggle:active {
+    background-color: #A8D9C8;
+}
+
 .sidebar__toggle {
     display: flex;
+    width: 40px;
     height: 40px;
     align-items: center;
     justify-content: center;
-    width: 172px;
-    padding: 0 16px;
-    margin: 0 auto;
-    /* Căn giữa nút trong Sidebar */
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: transparent;
     cursor: pointer;
     transition: background-color 0.2s ease;
-}
-
-.sidebar__toggle-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
+    flex-shrink: 0;
+    border-style: solid;
+    border-color: #E9EAEB;
+    border-width: 1px 0 0 1px;
+    border-radius: 8px 0 0;
 }
 
 .sidebar__toggle:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background-color: #ebebeb;
 }
 
 .sidebar__toggle__icon {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
-    mask-image: url('/src/assets/icons/Icon.svg');
-    mask-position: -162px -779px;
-    background-color: #c5ccd5;
+    mask-image: url("data:image/svg+xml,%3csvg%20width='20'%20height='20'%20viewBox='0%200%2020%2020'%20fill='none'%20xmlns='http://www.w3.org/2000/svg'%3e%3cpath%20d='M10.8333%205.83334H17.5M10.8333%2014.1667H17.5M14.1667%2010H17.5M2.5%2010H10.8333M2.5%2010L6.25%2013.75M2.5%2010L6.25%206.25001'%20stroke='%23717680'%20stroke-width='1.5'%20stroke-linecap='round'%20stroke-linejoin='round'/%3e%3c/svg%3e");
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    background-color: rgb(112, 119, 133);
 }
 
-.sidebar__toggle__text {
-    color: #c5ccd5;
-    font-size: 14px;
-    font-weight: 500;
-    margin-left: 8px;
-    white-space: nowrap;
-    margin-bottom: 2px;
+.sidebar__toggle:active {
+    background-color: #A8D9C8;
 }
+</style>
 
-.sidebar__toggle:hover .sidebar__toggle__text {
+<style>
+/* Tooltip được Teleport ra body — không dùng scoped để áp dụng được */
+.sidebar-item-tooltip {
+    position: fixed;
+    transform: translateY(-50%);
+    background-color: #38393d;
     color: #ffffff;
+    font-size: 13px;
+    font-weight: 400;
+    padding: 6px 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 99999;
+    pointer-events: none;
 }
 
-.sidebar__toggle:hover .sidebar__toggle__icon {
-    background-color: #ffffff;
+.sidebar-item-tooltip::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 5px 6px 5px 0;
+    border-style: solid;
+    border-color: transparent #38393d transparent transparent;
 }
 </style>
